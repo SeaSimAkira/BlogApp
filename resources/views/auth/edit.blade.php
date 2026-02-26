@@ -155,7 +155,7 @@
                             <label class="form-label fw-semibold">Confirm Password</label>
                             <div class="input-group">
                                 <input type="password" name="password_confirmation" id="password_confirmation"
-                                       class="form-control" placeholder="Retype You Password Again" required>
+                                       class="form-control" placeholder="Retype You Password Again" >
                                 <button class="btn btn-outline-secondary toggle-password" type="button" data-target="password_confirmation">
                                     <i class="bi bi-eye"></i>
                                 </button>

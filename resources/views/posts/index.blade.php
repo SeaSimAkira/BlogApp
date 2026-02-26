@@ -4,9 +4,13 @@
 
 @section("content")
 
+@auth
+@if(in_array(auth()->user()->role, ['admin','editor','contributor']))
 <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">
     Add New Post
 </a>
+@endif
+@endauth
 
 <table class="table table-bordered table-hover">
     <thead>
@@ -57,22 +61,36 @@
                     <a href="{{ route('posts.show', $post->id) }}"
                         class="btn btn-info btn-sm">Detail</a>
 
-                    @auth
-                    @if(auth()->user()->role === 'admin' || auth()->id() === $post->user_id)
-                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning btn-sm">
+                        @auth
+
+                        {{-- EDIT --}}
+                        @if(in_array(auth()->user()->role, ['admin','editor'])
+                            || auth()->id() === $post->user_id)
+
+                        <a href="{{ route('posts.edit', $post->id) }}"
+                           class="btn btn-warning btn-sm">
                             Edit
                         </a>
 
+                        @endif
+
+
+                        {{-- DELETE (ADMIN ONLY) --}}
+                        @if(auth()->user()->role === 'admin')
+
                         <form action="{{ route('posts.destroy', $post->id) }}"
-                            method="POST"
-                            class="d-inline"
-                            onsubmit="return confirm('Are you sure you want to delete this category?');">
+                              method="POST"
+                              class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                            <button class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
                         </form>
-                    @endif
-                    @endauth
+
+                        @endif
+
+                        @endauth
 
                 </td>
             </tr>

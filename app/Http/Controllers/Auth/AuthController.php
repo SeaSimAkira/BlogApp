@@ -187,7 +187,7 @@ class AuthController extends Controller
 
         // ✅ ROLE REDIRECT
         if ($user->role === 'admin') {
-            return redirect()->route('users.index')
+            return redirect()->route('dashboard')
                 ->with('success', 'Welcome Admin!');
         }
 
@@ -209,7 +209,9 @@ class AuthController extends Controller
 
         return redirect('/')->with('success', 'Logged out successfully.');
     }
+
 }
+
 
 
 

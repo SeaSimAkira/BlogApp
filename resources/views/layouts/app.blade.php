@@ -204,80 +204,80 @@
                 <span class="d-none d-md-inline">Alexander Pierce</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> --}}
-                <!--begin::User Menu Dropdown-->
-                    <li class="nav-item dropdown user-menu">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <!-- Guest Menu -->
+@guest
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('login') }}">Login</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('register') }}">Register</a>
+</li>
+@endguest
 
-                            <img
-                                src="{{ Auth::user()->profile_picture
-                                        ? asset('storage/' . Auth::user()->profile_picture)
-                                        : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) }}"
-                                class="user-image rounded-circle shadow"
-                                alt="User Image"
-                            />
 
-                            <span class="d-none d-md-inline">
-                                {{ Auth::user()->name }}
-                            </span>
-                        </a>
+<!-- User Menu -->
+@auth
+<li class="nav-item dropdown user-menu">
 
-                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                {{-- <!--begin::User Image-->
-                <li class="user-header text-bg-primary">
-                  <img
-                    src="./assets/img/user2-160x160.jpg"
-                    class="rounded-circle shadow"
-                    alt="User Image"
-                  />
-                  <p>
-                    Alexander Pierce - Web Developer
-                    <small>Member since Nov. 2023</small>
-                  </p>
-                </li> --}}
-                <!--begin::User Image-->
-                @auth
-                    <li class="user-header text-bg-primary text-center">
+    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
 
-                        <img
-                            src="{{ Auth::user()->profile_picture
-                                ? asset('storage/' . Auth::user()->profile_picture)
-                                : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) }}"
-                            class="rounded-circle shadow"
-                            alt="User Image"
-                        />
+        <img
+            src="{{ Auth::user()->profile_picture
+                ? asset('storage/' . Auth::user()->profile_picture)
+                : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) }}"
+            class="user-image rounded-circle shadow"
+            alt="User Image"
+        />
 
-                        <p>
-                            {{ Auth::user()->name }} - {{ ucfirst(Auth::user()->role) }}
+        <span class="d-none d-md-inline">
+            {{ Auth::user()->name }}
+        </span>
+    </a>
 
-                            <small>
-                                Member since {{ Auth::user()->created_at->format('M Y') }}
-                            </small>
-                        </p>
+    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
 
-                    </li>
-                    @endauth
-                <!--end::User Image-->
-                <!--begin::Menu Body-->
-                <li class="user-body">
-                  <!--begin::Row-->
-                  <div class="row">
-                    <div class="col-4 text-center"><a href="#">Followers</a></div>
-                    <div class="col-4 text-center"><a href="#">Sales</a></div>
-                    <div class="col-4 text-center"><a href="#">Friends</a></div>
-                  </div>
-                  <!--end::Row-->
-                </li>
-                <!--end::Menu Body-->
-                <!--begin::Menu Footer-->
-                <li class="user-footer">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                  <a href="#" class="btn btn-default btn-flat float-end">
-                    <form action="{{route ("logout") }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-default btn-flat">Sign out</button>
-                </form>
-                </a>
-                </li>
+        <!-- User Header -->
+        <li class="user-header text-bg-primary text-center">
+            <img
+                src="{{ Auth::user()->profile_picture
+                    ? asset('storage/' . Auth::user()->profile_picture)
+                    : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) }}"
+                class="rounded-circle shadow"
+                alt="User Image"
+            />
+
+            <p>
+                {{ Auth::user()->name }} - {{ ucfirst(Auth::user()->role) }}
+                <small>
+                    Member since {{ Auth::user()->created_at->format('M Y') }}
+                </small>
+            </p>
+        </li>
+
+        <!-- Menu Body -->
+        <li class="user-body">
+            <div class="row text-center">
+                <div class="col-4"><a href="#">Followers</a></div>
+                <div class="col-4"><a href="#">Sales</a></div>
+                <div class="col-4"><a href="#">Friends</a></div>
+            </div>
+        </li>
+
+        <!-- Footer -->
+        <li class="user-footer d-flex justify-content-between px-3">
+            <a href="#" class="btn btn-default btn-flat">Profile</a>
+
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-default btn-flat">
+                    Sign out
+                </button>
+            </form>
+        </li>
+
+    </ul>
+</li>
+@endauth
                 <!--end::Menu Footer-->
               </ul>
             </li>
@@ -330,9 +330,9 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="./index.html" class="nav-link">
+                    <a href="{{ route('users.index') }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
-                      <p>Dashboard v1</p>
+                      <p>Users</p>
                     </a>
                   </li>
                   <li class="nav-item">
